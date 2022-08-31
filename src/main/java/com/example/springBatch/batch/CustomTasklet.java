@@ -4,11 +4,17 @@ import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class CustomTasklet implements Tasklet {
+@Component
+public class CustomTasklet implements Tasklet, InitializingBean {
     private ServiceClass serviceClass;
     public CustomTasklet(ServiceClass serviceClass){
+        if ( serviceClass != null)
+            System.out.println("serviceClass is not null");
+        System.out.println("CustomTasklet constructor called.");
         this.serviceClass = serviceClass;
     }
 
@@ -25,5 +31,10 @@ public class CustomTasklet implements Tasklet {
         }
         else
             return RepeatStatus.FINISHED;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("CustomTasklet's afterPropertiesSet method called.");
     }
 }
