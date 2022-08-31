@@ -23,6 +23,9 @@ public class DemoController {
     @Qualifier("job1")
     Job job1;
 
+    @Autowired
+    @Qualifier("job2")
+    Job job2;
 
     @GetMapping("/health")
     public ResponseEntity<String> health(){
@@ -43,5 +46,13 @@ public class DemoController {
                 .addString("name", name).toJobParameters();
         JobExecution jobExecution = jobLauncher.run(job1, jobParameters);
         return new ResponseEntity<String> ( jobExecution.toString(),HttpStatus.OK);
+    }
+
+    @GetMapping("/launchJob2")
+    public ResponseEntity<String> launchJob2(@RequestParam(name = "name", required = true) String name) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addString("name", name).toJobParameters();
+        JobExecution jobExecution = jobLauncher.run(job2, jobParameters);
+        return new ResponseEntity<String>(jobExecution.toString(), HttpStatus.OK);
     }
 }

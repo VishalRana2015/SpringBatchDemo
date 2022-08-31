@@ -4,12 +4,19 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.step.tasklet.MethodInvokingTaskletAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.MethodInvoker;
+
+import java.lang.reflect.Method;
 
 @Configuration
 public class BatchBeans {
+
+    @Autowired
+    ServiceClass serviceClass;
 
     @Autowired
     JobBuilderFactory jobBuilderFactory;
@@ -40,5 +47,28 @@ public class BatchBeans {
                 .listener(new CustomJobExecutionListener())
                 .start(step1())
                 .build();
+    }
+
+    @Bean
+    public Job job2(){
+        return jobBuilderFactory.get("job2")
+                .start(step2())
+                .build();
+    }
+
+    @Bean
+    public Step step2(){
+        return stepBuilderFactory.get("step2")
+                .tasklet(myTasklet())
+                .build();
+    }
+
+    @Bean
+    public MethodInvokingTaskletAdapter myTasklet(){
+        MethodInvokingTaskletAdapter methodInvokingTaskletAdapter = new MethodInvokingTaskletAdapter();
+        methodInvokingTaskletAdapter.setTargetObject(serviceClass);
+        methodInvokingTaskletAdapter.setTargetMethod("serviceMethod");
+        methodInvokingTaskletAdapter.setArguments(new Object[]{23L});
+        return methodInvokingTaskletAdapter;
     }
 }
