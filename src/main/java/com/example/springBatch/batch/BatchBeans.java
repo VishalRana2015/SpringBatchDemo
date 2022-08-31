@@ -29,6 +29,8 @@ public class BatchBeans {
                 .listener(new CustomItemProcessListener())
                 .listener(new CustomStepExecutionListener())
                 .listener(new CustomItemReaderListener())
+                .startLimit(2)
+                .allowStartIfComplete(true)
                 .build();
     }
 
