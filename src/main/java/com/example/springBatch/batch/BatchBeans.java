@@ -30,7 +30,7 @@ public class BatchBeans {
                 .listener(new CustomStepExecutionListener())
                 .listener(new CustomItemReaderListener())
                 .startLimit(2)
-                .allowStartIfComplete(true)
+                .allowStartIfComplete(false)
                 .build();
     }
 
