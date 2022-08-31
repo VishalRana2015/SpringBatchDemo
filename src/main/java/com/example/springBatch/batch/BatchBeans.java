@@ -59,7 +59,8 @@ public class BatchBeans {
     @Bean
     public Step step2(){
         return stepBuilderFactory.get("step2")
-                .tasklet(myTasklet())
+                //.tasklet(myTasklet())
+                .tasklet(new CustomTasklet(serviceClass))
                 .build();
     }
 
