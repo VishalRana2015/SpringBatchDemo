@@ -1,9 +1,6 @@
 package com.example.springBatch.batch;
 
 import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.NonTransientResourceException;
-import org.springframework.batch.item.ParseException;
-import org.springframework.batch.item.UnexpectedInputException;
 
 public class CustomItemReader implements ItemReader<String> {
     public static int itemsCount = 10;
