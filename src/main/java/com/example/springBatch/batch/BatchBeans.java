@@ -61,6 +61,7 @@ public class BatchBeans {
         return stepBuilderFactory.get("step2")
                 //.tasklet(myTasklet())
                 .tasklet(new CustomTasklet(serviceClass))
+                .tasklet(new CustomTasklet2())
                 .build();
     }
 

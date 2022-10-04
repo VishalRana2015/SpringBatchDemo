@@ -8,8 +8,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
-public class CustomTasklet implements Tasklet, InitializingBean {
+public class CustomTasklet implements Tasklet{
     private ServiceClass serviceClass;
     public CustomTasklet(ServiceClass serviceClass){
         if ( serviceClass != null)
@@ -31,10 +30,5 @@ public class CustomTasklet implements Tasklet, InitializingBean {
         }
         else
             return RepeatStatus.FINISHED;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println("CustomTasklet's afterPropertiesSet method called.");
     }
 }
